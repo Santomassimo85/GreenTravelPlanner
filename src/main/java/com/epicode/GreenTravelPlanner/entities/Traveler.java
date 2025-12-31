@@ -1,13 +1,16 @@
 package com.epicode.GreenTravelPlanner.entities;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "travelers")
+@Getter
+@Setter
+@NoArgsConstructor
+@DiscriminatorValue("TRAVELER")
 public class Traveler extends User {
     private String bio;
-
-    public String getBio() { return bio; }
-    public void setBio(String bio) { this.bio = bio; }
 }

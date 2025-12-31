@@ -1,6 +1,6 @@
 package com.epicode.GreenTravelPlanner.repositories;
 
-import it.epicode.entities.User;
+import com.epicode.GreenTravelPlanner.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
