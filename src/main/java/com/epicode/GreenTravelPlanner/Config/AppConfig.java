@@ -12,13 +12,11 @@ import java.util.Map;
 @Configuration
 public class AppConfig {
 
-    // Questo serve per chiamare le API esterne (Meteo)
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
-    // Questo serve per caricare le immagini (Cloudinary)
     @Bean
     public Cloudinary cloudinary() {
         Map<String, String> config = new HashMap<>();

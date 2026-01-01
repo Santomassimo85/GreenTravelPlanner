@@ -2,11 +2,13 @@ package com.epicode.GreenTravelPlanner.services;
 
 import com.epicode.GreenTravelPlanner.entities.Traveler;
 import com.epicode.GreenTravelPlanner.entities.User;
+import com.epicode.GreenTravelPlanner.exceptions.NotFoundException;
 import com.epicode.GreenTravelPlanner.payloads.LoginDTO;
 import com.epicode.GreenTravelPlanner.payloads.NewUserDTO;
 import com.epicode.GreenTravelPlanner.repositories.UserRepository;
 import com.epicode.GreenTravelPlanner.security.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -67,5 +69,10 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Utente non trovato con ID: " + id));
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Utente con email " + email + " non trovato"));
     }
 }

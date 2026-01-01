@@ -1,10 +1,8 @@
 package com.epicode.GreenTravelPlanner.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +19,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type") // Colonna che distingue tra User e Traveler
 public class User implements UserDetails {
@@ -38,6 +37,8 @@ public class User implements UserDetails {
     private String name;
     private String surname;
     private String profileImage;
+
+    @CreationTimestamp
     private LocalDate registrationDate = LocalDate.now();
 
 

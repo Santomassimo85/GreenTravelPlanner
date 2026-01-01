@@ -6,6 +6,6 @@ import java.util.Optional;
 
 // JpaRepository fornisce già i metodi base (salva, elimina, cerca) [cite: 29]
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Ci servirà per il login: cerca un utente tramite l'email
+    // Spring genererà automaticamente la logica grazie a questo nome
     Optional<User> findByEmail(String email);
 }

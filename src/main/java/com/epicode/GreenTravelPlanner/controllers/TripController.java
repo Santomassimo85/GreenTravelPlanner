@@ -24,7 +24,6 @@ public class TripController {
 
     @PostMapping
     public Trip createTrip(@RequestBody Trip body, @AuthenticationPrincipal User currentUser) {
-        // @AuthenticationPrincipal prende automaticamente l'utente dal JWT Token
         return tripService.saveTrip(body, currentUser);
     }
 }
