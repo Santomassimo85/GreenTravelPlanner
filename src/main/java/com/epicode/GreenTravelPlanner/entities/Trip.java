@@ -13,12 +13,12 @@ public class Trip {
 
     private String title;
 
+    private String destination;
+
     private String description;
     private Double budget;
-
     private LocalDate startDate;
     private LocalDate endDate;
-
 
     @Transient
     private String status;
@@ -26,6 +26,7 @@ public class Trip {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
+
 
     @OneToMany(mappedBy = "trip")
     private List<Destination> destinations;
@@ -36,6 +37,9 @@ public class Trip {
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
+
+    public String getDestination() { return destination; }
+    public void setDestination(String destination) { this.destination = destination; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
@@ -53,22 +57,15 @@ public class Trip {
     public void setOwner(User owner) { this.owner = owner; }
 
     public String getStatus() {
-        if (startDate == null || endDate == null) {
-            return "NON_PIANIFICATO";
-        }
+        if (startDate == null || endDate == null) return "NON_PIANIFICATO";
         LocalDate today = LocalDate.now();
-
-        if (today.isBefore(startDate)) {
-            return "IN_PROGRAMMA";
-        } else if (today.isAfter(endDate)) {
-            return "COMPLETATO";
-        } else {
-            return "IN_CORSO";
-        }
+        if (today.isBefore(startDate)) return "IN_PROGRAMMA";
+        else if (today.isAfter(endDate)) return "COMPLETATO";
+        else return "IN_CORSO";
     }
 
     public String getFormattedBudget() {
-        if (budget == null) return "0 kr.";
-        return String.format("%,.0f kr.", budget);
+        if (budget == null) return "0 DKK";
+        return String.format("%,.0f DKK", budget);
     }
 }
