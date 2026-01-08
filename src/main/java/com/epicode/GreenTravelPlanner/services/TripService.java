@@ -3,6 +3,7 @@ package com.epicode.GreenTravelPlanner.services;
 
 import com.epicode.GreenTravelPlanner.entities.Trip;
 import com.epicode.GreenTravelPlanner.entities.User;
+import com.epicode.GreenTravelPlanner.exceptions.NotFoundException;
 import com.epicode.GreenTravelPlanner.repositories.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,10 @@ public class TripService {
 
     public List<Trip> getAll() {
         return tripRepository.findAll();
+    }
+
+    public Trip findById(Long id) {
+        return tripRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Viaggio non trovato con ID: " + id));
     }
 }
