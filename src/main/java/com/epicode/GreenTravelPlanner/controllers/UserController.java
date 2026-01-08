@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.io.IOException;
 
@@ -33,5 +34,12 @@ public class UserController {
     public User uploadAvatar(@PathVariable Long userId, @RequestParam("avatar") MultipartFile file) throws IOException {
 
         return userService.uploadImage(userId, file);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')") // Security check
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return "Utente con ID " + id + " cancellato correttamente.";
     }
 }

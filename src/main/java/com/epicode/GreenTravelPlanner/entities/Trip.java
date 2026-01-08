@@ -1,5 +1,6 @@
 package com.epicode.GreenTravelPlanner.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,9 +13,7 @@ public class Trip {
     private Long id;
 
     private String title;
-
     private String destination;
-
     private String description;
     private Double budget;
     private LocalDate startDate;
@@ -25,8 +24,8 @@ public class Trip {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"password", "trips", "reviews", "roles", "authorities"})
     private User owner;
-
 
     @OneToMany(mappedBy = "trip")
     private List<Destination> destinations;

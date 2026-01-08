@@ -1,6 +1,5 @@
 package com.epicode.GreenTravelPlanner.services;
 
-import com.epicode.GreenTravelPlanner.entities.Traveler;
 import com.epicode.GreenTravelPlanner.entities.User;
 import com.epicode.GreenTravelPlanner.exceptions.NotFoundException;
 import com.epicode.GreenTravelPlanner.payloads.LoginDTO;
@@ -32,15 +31,15 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Traveler save(NewUserDTO body) {
+    public User save(NewUserDTO body) {
         userRepository.findByEmail(body.email()).ifPresent(user -> {
             throw new RuntimeException("L'email " + body.email() + " è già in uso!");
         });
 
-        Traveler newUser = new Traveler();
-        newUser.setName(body.name()); // [cite: 17]
-        newUser.setSurname(body.surname()); // [cite: 17]
-        newUser.setEmail(body.email()); // [cite: 16]
+        User newUser = new User();
+        newUser.setName(body.name());
+        newUser.setSurname(body.surname());
+        newUser.setEmail(body.email());
 
         newUser.setPassword(passwordEncoder.encode(body.password()));
 
@@ -89,5 +88,10 @@ public class UserService {
         found.setProfileImage(url);
 
         return userRepository.save(found);
+    }
+
+    public void deleteUser(Long id) {
+        User user = this.findById(id);
+        userRepository.delete(user);
     }
 }

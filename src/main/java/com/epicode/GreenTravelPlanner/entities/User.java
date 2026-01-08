@@ -1,5 +1,6 @@
 package com.epicode.GreenTravelPlanner.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,11 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -20,8 +17,6 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type") // Colonna che distingue tra User e Traveler
 public class User implements UserDetails {
 
     @Id
@@ -38,11 +33,14 @@ public class User implements UserDetails {
     private String surname;
     private String profileImage;
 
+
+    @Column(columnDefinition = "TEXT")
+    private String bio;
+
     @CreationTimestamp
     private LocalDate registrationDate = LocalDate.now();
 
-
-    // Relazione Molti-a-Molti: un utente può avere più ruoli, un ruolo può appartenere a più utenti
+    // --- RELAZIONE RUOLI ---
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -51,27 +49,30 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+    // --- RELAZIONE VIAGGI ---
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Trip> trips = new ArrayList<>();
 
+    // --- RELAZIONE RECENSIONI ---
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Review> reviews = new ArrayList<>();
 
-    // Questo metodo trasforma i nostri Role in "Authority" per Spring Security
+    // --- METODI SECURITY ---
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName())) // Corretto: usa getName()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .toList();
     }
 
-    // Metodi richiesti da UserDetails per la sicurezza
     @Override
-    public String getPassword() {
-        return this.password;
-    }
+    public String getPassword() { return this.password; }
 
     @Override
-    @NonNull
-    public String getUsername() {
-        return this.email; // Usiamo l'email come login univoco
-    }
+    public String getUsername() { return this.email; }
 
     @Override
     public boolean isAccountNonExpired() { return true; }

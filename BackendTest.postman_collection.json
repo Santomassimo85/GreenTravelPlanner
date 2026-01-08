@@ -1,0 +1,365 @@
+{
+	"info": {
+		"_postman_id": "d4f5ce16-8179-4790-843e-6383d0a74643",
+		"name": "BackendTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50008199",
+		"_collection_link": "https://s00003624-1667218.postman.co/workspace/Luca-Santomassimo's-Workspace~ca541429-0d0a-4cc6-8df8-e2a2e7855236/collection/50008199-d4f5ce16-8179-4790-843e-6383d0a74643?action=share&source=collection_link&creator=50008199"
+	},
+	"item": [
+		{
+			"name": "test_register_user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Lucas\",\r\n    \"surname\": \"Santomassimos\",\r\n    \"email\": \"nonhomail@gmamm.it\",\r\n    \"password\": \"1011121314\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"pablo@ciao.it\",\r\n    \"password\": \"12345678!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save_trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njc4MDU0MjIsImV4cCI6MTc2Nzg5MTgyMiwic3ViIjoiNCJ9.Tr4NUooX1NOkGYhFSSDPuOVJRDxOq46r98l75ycteiQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Viaggio culinario\",\r\n    \"destination\": \"France\",\r\n    \"description\": \"In giro a provare cibo francese\",\r\n    \"budget\": 1500.0,\r\n    \"startDate\": \"2026-05-10\",\r\n    \"endDate\": \"2026-05-20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/trips",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"trips"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add_review_id5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njc4NjIwNDgsImV4cCI6MTc2Nzk0ODQ0OCwic3ViIjoiNCJ9.bOFYmpasV828DR5MJY219ytnRALsvQCVBl2F64MaMJQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rating\": 7,\r\n    \"text\": \"Esperienza bellissima, Pompei è magica!\",\r\n    \"comment\": \"Tutto molto bello\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/reviews/trip/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reviews",
+						"trip",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add_destination_id5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njc4NjIwNDgsImV4cCI6MTc2Nzk0ODQ0OCwic3ViIjoiNCJ9.bOFYmpasV828DR5MJY219ytnRALsvQCVBl2F64MaMJQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Pompei\",\r\n    \"activity\": \"Tour del centro storico e dell´auditorium\",\r\n    \"date\": \"2026-06-12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/destinations/trip/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"destinations",
+						"trip",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add_destination_id7",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njc4NjIwNDgsImV4cCI6MTc2Nzk0ODQ0OCwic3ViIjoiNCJ9.bOFYmpasV828DR5MJY219ytnRALsvQCVBl2F64MaMJQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Caracas\",\r\n    \"activity\": \"Tour del centro storico e street food\",\r\n    \"date\": \"2026-06-02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/destinations/trip/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"destinations",
+						"trip",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test_get_trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njc4Njg3MDIsImV4cCI6MTc2Nzk1NTEwMiwic3ViIjoiNCJ9.rlmJOiJpNOjMokDVpKVtk-zhoQhcPbO14TdD0X_RqZI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/trips/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"trips",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test_notFound404",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njc4Njg3MDIsImV4cCI6MTc2Nzk1NTEwMiwic3ViIjoiNCJ9.rlmJOiJpNOjMokDVpKVtk-zhoQhcPbO14TdD0X_RqZI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/trips/9999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"trips",
+						"9999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_picture_id2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njc4MDAxMTEsImV4cCI6MTc2Nzg4NjUxMSwic3ViIjoiNCJ9.1A-XU8VfZj3CvS4eYEnndmXz6TRZNMuokxOgFe1U9Oo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": [
+								"/C:/Users/KalEl/Downloads/siberian-husky-silhouette-2 (1).jpg",
+								"/C:/Users/KalEl/Downloads/775884c5-8f56-4014-a66e-e5d9013ee22d.png"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/2/avatar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"2",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_try_to_delete_user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njc4ODYyMjIsImV4cCI6MTc2Nzk3MjYyMiwic3ViIjoiNiJ9.5Snl9JX7ct-25qYV7DzUqHDeAbXBE1IC26zlkNHv3C0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"pablo@ciao.it\",\r\n    \"password\": \"12345678!\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
