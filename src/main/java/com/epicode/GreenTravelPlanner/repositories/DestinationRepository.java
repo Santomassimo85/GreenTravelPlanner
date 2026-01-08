@@ -6,10 +6,20 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository interface for Destination entities.
+ * Provides standard CRUD operations via JpaRepository and custom query methods
+ * to filter destinations based on their associated trip.
+ */
 @Repository
 public interface DestinationRepository extends JpaRepository<Destination, Long> {
 
-   // This method retrieves all Destination entities associated with a specific Trip ID
-    // How it works : Spring Data JPA generates the query based on the method name
+    /**
+     * Retrieves a list of all destinations associated with a specific trip.
+     * Spring Data JPA automatically generates the SQL query by parsing the method name:
+     * "SELECT d FROM Destination d WHERE d.trip.id = ?1"
+     * * @param tripId the unique identifier of the trip
+     * @return a list of destinations linked to the provided trip ID
+     */
     List<Destination> findByTripId(Long tripId);
 }

@@ -12,10 +12,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Global exception handler for the application.
+ * This class intercepts exceptions thrown by controllers and returns
+ * standardized JSON error responses to the client.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // 1. GESTISCE IL 404 (Not Found) - Quello che volevamo noi!
+    /**
+     * Handles cases where a requested resource is not found (404 Not Found).
+     * @param ex the NotFoundException thrown by the service layer
+     * @return a response entity containing error details and 404 status
+     */
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handleNotFoundException(NotFoundException ex) {
         Map<String, Object> body = new HashMap<>();
@@ -26,8 +35,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    // 2. GESTISCE GLI ERRORI DI VALIDAZIONE (Es. Email vuota)
-    // Ho convertito la logica del vecchio file per non usare ErrorsPayload
+    /**
+     * Handles validation errors (400 Bad Request).
+     * Triggered when @Valid constraints on request bodies are violated.
+     * @param ex the validation exception containing binding results
+     * @return a response entity with a list of specific field errors
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationErrors(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult().getFieldErrors().stream()
@@ -36,30 +49,40 @@ public class GlobalExceptionHandler {
 
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("message", "Errore nei dati inviati");
+        body.put("message", "Validation error in the submitted data");
         body.put("errorsList", errors);
         body.put("status", HttpStatus.BAD_REQUEST.value());
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    // 3. GESTISCE TUTTO IL RESTO (Errore 500 generico)
+    /**
+     * Handles generic unexpected errors (500 Internal Server Error).
+     * @param ex the root exception
+     * @return a response entity with a generic error message
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGenericError(Exception ex) {
-        ex.printStackTrace(); // Utile per il debug
+        ex.printStackTrace(); // Useful for server-side debugging
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("message", "Errore interno del server: " + ex.getMessage());
+        body.put("message", "Internal server error: " + ex.getMessage());
         body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
 
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Handles authorization errors (403 Forbidden).
+     * Triggered when a user tries to access a resource without sufficient permissions.
+     * @param ex the AccessDeniedException
+     * @return a response entity with a forbidden status
+     */
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("message", "Accesso negato: non hai i permessi per questa operazione!");
+        body.put("message", "Access denied: you do not have permission for this operation!");
         body.put("status", HttpStatus.FORBIDDEN.value());
 
         return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
