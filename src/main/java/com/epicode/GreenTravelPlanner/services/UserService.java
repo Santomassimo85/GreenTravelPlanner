@@ -45,7 +45,7 @@ public class UserService {
         newUser.setPassword(passwordEncoder.encode(body.password()));
 
         newUser.setRegistrationDate(LocalDate.now());
-        newUser.setProfileImage("https://ui-avatars.com/api/?name=" + body.name()); // Immagine di default
+        newUser.setProfileImage("https://ui-avatars.com/api/?name=" + body.name());
 
         return userRepository.save(newUser);
     }
@@ -72,7 +72,7 @@ public class UserService {
     }
 
     public org.springframework.data.domain.Page<User> getAllUsers(int page, int size, String sortBy) {
-        if (size > 50) size = 50; // Limita la dimensione per sicurezza
+        if (size > 50) size = 50;
         org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sortBy));
         return userRepository.findAll(pageable);
     }
